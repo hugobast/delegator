@@ -30,5 +30,41 @@ class TestsSimpleDelegator(TestCase):
     def test_acts_as_the_real_object_with_callables(self):
         self.assertEqual(self.delegator.full_name(), self.delegated.full_name())
 
-    def test_acts_as_the_real_object_with_callables_on_concreate(self):
+    def test_can_use_its_own_callables(self):
         self.assertEqual(self.delegator.greeting(), self.delegated.greeting())
+
+    def test_acts_as_the_real_object_with_set_attributes(self):
+        self.delegator.first_name = "John"
+        self.assertEqual(self.delegator.first_name, self.delegated.first_name)
+
+
+class FrameworkObject(object):
+    text_field_title = "Title"
+    text_field_fname = "First Name"
+    text_field_lname = "Last Name"
+
+
+class FrameworkObjectProxy(SimpleDelegator):
+    category = "Person"
+
+    def shout(self):
+        return "I am the {}!".format(self.text_field_title.upper())
+
+    def define(self):
+        return "{0}, is a {1}.".format(self.text_field_fname, self.category)
+
+
+class TestsInheritedSimpleDelegator(TestCase):
+
+    def setUp(self):
+        self.model = FrameworkObject()
+        self.model_proxy = FrameworkObjectProxy(self.model)
+
+    def test_can_check_attributes_on_delegated_model(self):
+        self.assertEqual(self.model_proxy.text_field_fname, "First Name")
+
+    def test_can_exec_callables_on_delegated_model(self):
+        self.assertEqual(self.model_proxy.shout(), "I am the TITLE!")
+
+    def test_can_exec_callables_on_itself(self):
+        self.assertEqual(self.model_proxy.define(), "First Name, is a Person.")

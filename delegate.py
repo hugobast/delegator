@@ -6,6 +6,14 @@ class Delegator(object):
     def __init__(self, obj):
         self.__setobj__(obj)
 
+    def __setattr__(self, name, value):
+        target = self.__getobj__()
+
+        if name in self.__dict__:
+            object.__setattr__(self, name, value)
+        else:
+            setattr(target, name, value)
+
     def __getattr__(self, name):
         target = self.__getobj__()
 
@@ -38,9 +46,9 @@ class Delegator(object):
 class SimpleDelegator(Delegator):
 
     def __getobj__(self):
-        return self.delegate_sd_obj
+        return self.__dict__['delegate_sd_obj']
 
     def __setobj__(self, obj):
         if self is obj:
             raise AttributeError("cannot delegate to self")
-        self.delegate_sd_obj = obj
+        self.__dict__['delegate_sd_obj'] = obj
