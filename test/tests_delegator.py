@@ -48,7 +48,7 @@ class FrameworkObjectProxy(SimpleDelegator):
     category = "Person"
 
     def shout(self):
-        return "I am the {}!".format(self.text_field_title.upper())
+        return "I am the {0}!".format(self.text_field_title.upper())
 
     def define(self):
         return "{0}, is a {1}.".format(self.text_field_fname, self.category)
