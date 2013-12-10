@@ -1,5 +1,5 @@
 from unittest import TestCase
-from .delegate import SimpleDelegator
+from delegator.delegator import SimpleDelegator
 
 
 class Parent(object):
