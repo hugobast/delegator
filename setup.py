@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='Delegator',
+    name='delegator',
     author='Hugo Bastien',
     author_email='hugobast@gmail.com',
     url='https://github.com/hugobast/delegator',
