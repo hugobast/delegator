@@ -17,7 +17,7 @@ class Delegator(object):
     def __getattr__(self, name):
         target = self.__getobj__()
 
-        if getattr(target, name):
+        if hasattr(target, name):
             if callable(getattr(target, name)):
                 def _missing(*args, **kwargs):
                     return getattr(target, name)(*args, **kwargs)
