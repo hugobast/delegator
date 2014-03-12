@@ -24,7 +24,11 @@ class Delegator(object):
             else:
                 _missing = getattr(target, name)
 
-        return _missing
+            return _missing
+
+        raise AttributeError("'{0}' object has no attribute '{1}'".format(
+            self.__getobj__().__class__.__name__, name
+        ))
 
     def __setobj__(self, obj):
         raise NotImplementedError("need to define `__setobj__'")

@@ -68,3 +68,10 @@ class TestsInheritedSimpleDelegator(TestCase):
 
     def test_can_exec_callables_on_itself(self):
         self.assertEqual(self.model_proxy.define(), "First Name, is a Person.")
+
+    def test_raises_no_method_found_error_as_expected(self):
+        with self.assertRaisesRegexp(
+            AttributeError,
+            r"'FrameworkObject' object has no attribute 'this_does_not_exists'"
+        ):
+            self.model_proxy.this_does_not_exists()
